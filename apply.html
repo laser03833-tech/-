@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>สมัครเรียน มหาวิทยาลัยเทพนคร</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f2f2f2;
+text-align:center;
+}
+
+.box{
+background:white;
+padding:30px;
+margin:40px auto;
+width:350px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+select,input{
+width:90%;
+padding:10px;
+margin:10px;
+}
+
+button{
+padding:10px 20px;
+background:#ff9900;
+border:none;
+color:white;
+font-size:16px;
+border-radius:5px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>สมัครเข้าศึกษา</h2>
+
+<p>มหาวิทยาลัยเทพนคร</p>
+<p>วิทยาเขตรังสิต</p>
+
+<input type="text" placeholder="ชื่อผู้สมัคร">
+
+<select id="faculty" onchange="updateMajor()">
+<option>เลือกคณะ</option>
+
+<option value="eng">คณะวิศวกรรมศาสตร์</option>
+<option value="com">คณะนิเทศศาสตร์</option>
+<option value="bus">คณะบริหารธุรกิจ</option>
+<option value="film">คณะดิจิทัลมีเดียและศิลปะภาพยนตร์</option>
+<option value="psy">คณะจิตวิทยา</option>
+<option value="med">คณะแพทยศาสตร์</option>
+
+</select>
+
+<select id="major">
+<option>เลือกสาขา</option>
+</select>
+
+<br>
+
+<button onclick="submitForm()">ส่งใบสมัคร</button>
+
+<p id="result"></p>
+
+</div>
+
+<script>
+
+function updateMajor(){
+
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major")
+
+major.innerHTML=""
+
+if(faculty=="eng"){
+
+major.innerHTML+=`<option>วิศวกรรมไฟฟ้า</option>`
+major.innerHTML+=`<option>วิศวกรรมโยธา</option>`
+
+}
+
+if(faculty=="com"){
+
+major.innerHTML+=`<option>ศิลปะการแสดง</option>`
+major.innerHTML+=`<option>การผลิตอีเว้นท์และการจัดการนิทรรศการ</option>`
+
+}
+
+if(faculty=="bus"){
+
+major.innerHTML+=`<option>การออกแบบและการบริหารแฟชั่น</option>`
+major.innerHTML+=`<option>การวางแผนการเงินและการลงทุน</option>`
+
+}
+
+if(faculty=="film"){
+
+major.innerHTML+=`<option>ภาพยนตร์</option>`
+
+}
+
+if(faculty=="psy"){
+
+major.innerHTML+=`<option>จิตวิทยา</option>`
+
+}
+
+if(faculty=="med"){
+
+major.innerHTML+=`<option>แพทยศาสตร์</option>`
+major.innerHTML+=`<option>สัตวแพทยศาสตร์</option>`
+
+}
+
+}
+
+function submitForm(){
+
+document.getElementById("result").innerHTML=
+"ส่งใบสมัครเรียบร้อยแล้ว (ภาคปกติ หลักสูตรนานาชาติ)"
+
+}
+
+</script>
+
+</body>
+  </html>
