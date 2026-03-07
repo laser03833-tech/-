@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>มหาวิทยาลัยเทพนคร - ระบบสมัครเข้าศึกษา</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f2f2f2;
+text-align:center;
+}
+
+.container{
+background:white;
+padding:30px;
+margin:40px;
+border-radius:10px;
+max-width:500px;
+margin:auto;
+}
+
+h1{
+color:#cc6600;
+}
+
+input,select{
+padding:12px;
+margin:10px;
+width:90%;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+padding:12px 20px;
+background:#ff8800;
+border:none;
+color:white;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#ff7700;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>มหาวิทยาลัยเทพนคร</h1>
+<h3>ระบบสมัครเข้าศึกษา</h3>
+
+<input placeholder="ชื่อ - นามสกุลผู้สมัคร">
+
+<select id="faculty" onchange="updateMajor()">
+
+<option value="">เลือกคณะ</option>
+
+<option value="engineering">คณะวิศวกรรมศาสตร์</option>
+
+<option value="communication">คณะนิเทศศาสตร์</option>
+
+<option value="business">คณะบริหารธุรกิจ</option>
+
+<option value="film">คณะดิจิทัลมีเดียและศิลปะภาพยนตร์</option>
+
+<option value="psychology">คณะจิตวิทยา</option>
+
+<option value="medical">คณะแพทยศาสตร์</option>
+
+</select>
+
+<select id="major">
+
+<option>เลือกสาขา</option>
+
+</select>
+
+<button>ส่งใบสมัคร</button>
+
+</div>
+
+<script>
+
+function updateMajor(){
+
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major")
+
+major.innerHTML=""
+
+if(faculty=="engineering"){
+
+major.innerHTML+=`<option>วิศวกรรมไฟฟ้า</option>`
+major.innerHTML+=`<option>วิศวกรรมโยธา</option>`
+
+}
+
+if(faculty=="communication"){
+
+major.innerHTML+=`<option>ศิลปะการแสดง</option>`
+major.innerHTML+=`<option>การผลิตอีเว้นท์และการจัดการนิทรรศการ</option>`
+
+}
+
+if(faculty=="business"){
+
+major.innerHTML+=`<option>การออกแบบและการบริหารแฟชั่น</option>`
+major.innerHTML+=`<option>การวางแผนการเงินและการลงทุน</option>`
+
+}
+
+if(faculty=="film"){
+
+major.innerHTML+=`<option>ภาพยนตร์</option>`
+
+}
+
+if(faculty=="psychology"){
+
+major.innerHTML+=`<option>จิตวิทยา</option>`
+
+}
+
+if(faculty=="medical"){
+
+major.innerHTML+=`<option>แพทยศาสตร์</option>`
+major.innerHTML+=`<option>สัตวแพทยศาสตร์</option>`
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
