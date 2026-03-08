@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ระบบสมัครเข้าศึกษา</title>
+
+<style>
+
+body{
+font-family:sans-serif;
+margin:0;
+background:#f3f3f3;
+text-align:center;
+}
+
+/* HEADER */
+
+.header{
+background:#b80000;
+color:white;
+padding:18px;
+font-size:24px;
+font-weight:bold;
+}
+
+/* FORM */
+
+.box{
+background:white;
+max-width:420px;
+margin:30px auto;
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 12px rgba(0,0,0,0.15);
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
+button{
+width:100%;
+margin-top:12px;
+padding:13px;
+border:none;
+border-radius:12px;
+background:#c40000;
+color:white;
+font-size:17px;
+cursor:pointer;
+}
+
+/* TOP BAR */
+
+.topbar{
+display:flex;
+background:#f6a800;
+color:white;
+font-weight:bold;
+}
+
+.round{
+background:#f1e3c7;
+color:#c88800;
+padding:10px;
+font-size:18px;
+}
+
+.port{
+padding:10px;
+font-size:22px;
+text-align:left;
+}
+
+.port span{
+font-size:14px;
+}
+
+/* RESULT */
+
+.title{
+color:#2f5f97;
+font-size:30px;
+margin-top:20px;
+}
+
+.time{
+font-size:18px;
+}
+
+.card{
+background:#eee;
+border:3px solid #2fb34a;
+border-radius:12px;
+padding:25px;
+max-width:420px;
+margin:20px auto;
+position:relative;
+text-align:left;
+}
+
+.corner{
+position:absolute;
+top:0;
+left:0;
+width:45px;
+height:45px;
+background:#2fb34a;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+clip-path: polygon(0 0,100% 0,0 100%);
+}
+
+.logo{
+position:absolute;
+right:20px;
+top:20px;
+width:65px;
+}
+
+.uni{
+font-size:22px;
+font-weight:bold;
+}
+
+.card p{
+margin:4px 0;
+font-size:17px;
+}
+
+/* MORE INFO */
+
+.more{
+color:#666;
+cursor:pointer;
+margin-top:10px;
+}
+
+.extra{
+display:none;
+max-width:420px;
+margin:auto;
+background:#eaeaea;
+padding:15px;
+border-radius:10px;
+text-align:left;
+}
+
+/* LIST */
+
+.listbox{
+background:white;
+max-width:500px;
+margin:30px auto;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 12px rgba(0,0,0,0.15);
+text-align:left;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+ระบบสมัครเข้าศึกษาระดับปริญญาตรี
+</div>
+
+<!-- FORM -->
+
+<div class="box">
+
+<input id="name" placeholder="ชื่อ - นามสกุล">
+
+<input id="school" placeholder="สถานศึกษาเดิม">
+
+<select id="faculty" onchange="loadMajor()">
+<option value="">เลือกคณะ</option>
+<option>วิศวกรรมศาสตร์</option>
+<option>นิเทศศาสตร์</option>
+<option>บริหารธุรกิจ</option>
+<option>ดิจิทัลมีเดียและศิลปะภาพยนตร์</option>
+<option>จิตวิทยา</option>
+<option>แพทยศาสตร์</option>
+</select>
+
+<select id="major">
+<option value="">เลือกสาขา</option>
+</select>
+
+<button onclick="apply()">สมัครเข้าศึกษา</button>
+
+<button onclick="showList()">ดูรายชื่อผู้สมัคร</button>
+
+</div>
+
+<!-- RESULT -->
+
+<div id="resultPage" style="display:none">
+
+<div class="topbar">
+<div class="round">รอบ<br>1</div>
+<div class="port">
+Portfolio
+<br>
+<span>ยืนยันสิทธิ์เรียบร้อยแล้ว</span>
+</div>
+</div>
+
+<h1 class="title">ยืนยันสิทธิ์เรียบร้อยแล้ว</h1>
+<div class="time" id="time"></div>
+
+<div class="card">
+
+<div class="corner">✓</div>
+
+<img src="logo.png" class="logo">
+
+<p class="uni">มหาวิทยาลัยเทพนคร</p>
+<p>ปทุมธานี</p>
+<p>วิทยาเขตรังสิต</p>
+
+<p id="facultyShow"></p>
+<p id="majorShow"></p>
+
+<p>หลักสูตรระดับปริญญาตรี</p>
+<p>หลักสูตรปกติ (ภาษาไทย)</p>
+<p>โครงการรับตรงอิสระ</p>
+
+</div>
+
+<div class="more" onclick="toggleInfo()">ข้อมูลเพิ่มเติม ▼</div>
+
+<div class="extra" id="extra">
+<p id="showName"></p>
+<p id="showSchool"></p>
+</div>
+
+</div>
+
+<!-- LIST -->
+
+<div id="listPage" class="listbox" style="display:none"></div>
+
+<script>
+
+const majors={
+"วิศวกรรมศาสตร์":[
+"สาขาวิศวกรรมไฟฟ้า",
+"สาขาวิศวกรรมโยธา"
+],
+"นิเทศศาสตร์":[
+"สาขาศิลปะการแสดง",
+"สาขาการผลิตอีเว้นท์และการจัดการนิทรรศการ"
+],
+"บริหารธุรกิจ":[
+"สาขาการออกแบบและการบริหารแฟชั่น",
+"สาขาการวางแผนการเงินและการลงทุน"
+],
+"ดิจิทัลมีเดียและศิลปะภาพยนตร์":[
+"สาขาภาพยนตร์และสื่อดิจิทัล"
+],
+"จิตวิทยา":[
+"สาขาจิตวิทยาประยุกต์"
+],
+"แพทยศาสตร์":[
+"สาขาแพทยศาสตร์",
+"สาขาสัตวแพทยศาสตร์"
+]
+}
+
+function loadMajor(){
+
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major")
+
+major.innerHTML='<option value="">เลือกสาขา</option>'
+
+if(!majors[faculty]) return
+
+majors[faculty].forEach(m=>{
+let op=document.createElement("option")
+op.value=m
+op.text=m
+major.appendChild(op)
+})
+
+}
+
+function apply(){
+
+let name=document.getElementById("name").value
+let school=document.getElementById("school").value
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major").value
+
+if(!name||!school||!faculty||!major){
+alert("กรอกข้อมูลให้ครบ")
+return
+}
+
+let data=JSON.parse(localStorage.getItem("applicants")||"[]")
+
+data.push({name,school,faculty,major})
+
+localStorage.setItem("applicants",JSON.stringify(data))
+
+document.getElementById("facultyShow").innerHTML="คณะ "+faculty
+document.getElementById("majorShow").innerHTML=major
+
+document.getElementById("showName").innerHTML="ผู้สมัคร : "+name
+document.getElementById("showSchool").innerHTML="สถานศึกษาเดิม : "+school
+
+document.querySelector(".box").style.display="none"
+document.getElementById("resultPage").style.display="block"
+
+}
+
+function toggleInfo(){
+
+let box=document.getElementById("extra")
+
+box.style.display=box.style.display=="block"?"none":"block"
+
+}
+
+function showList(){
+
+let data=JSON.parse(localStorage.getItem("applicants")||"[]")
+
+let html="<h3>รายชื่อผู้สมัคร</h3>"
+
+let groups={}
+
+data.forEach(d=>{
+if(!groups[d.faculty]) groups[d.faculty]=[]
+groups[d.faculty].push(d)
+})
+
+for(let f in groups){
+
+html+="<h4>คณะ "+f+"</h4>"
+
+groups[f].forEach(x=>{
+html+="<p>"+x.name+" — "+x.major+"</p>"
+})
+
+}
+
+document.querySelector(".box").style.display="none"
+document.getElementById("listPage").style.display="block"
+document.getElementById("listPage").innerHTML=html
+
+}
+
+function updateTime(){
+
+let now=new Date()
+
+let d=now.getDate()
+let m=now.getMonth()+1
+let y=now.getFullYear()+543
+
+let h=now.getHours()
+let min=now.getMinutes()
+let s=now.getSeconds()
+
+document.getElementById("time").innerHTML=
+`${d}/${m}/${y} ${h}:${min}:${s} น.`
+
+}
+
+setInterval(updateTime,1000)
+
+</script>
+
+</body>
+  </html>
