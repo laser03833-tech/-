@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>มหาวิทยาลัยเทพนคร</title>
+
+<style>
+
+body{
+font-family:tahoma;
+background:#f4f4f4;
+margin:0;
+}
+
+.title{
+text-align:center;
+font-size:28px;
+color:#b30000;
+margin-top:40px;
+font-weight:bold;
+}
+
+.card{
+background:white;
+width:90%;
+max-width:420px;
+margin:20px auto;
+padding:25px;
+border-radius:20px;
+box-shadow:0 6px 20px rgba(0,0,0,0.1);
+}
+
+input,select{
+width:100%;
+padding:16px;
+margin:10px 0;
+border-radius:14px;
+border:2px solid #ddd;
+font-size:18px;
+}
+
+select{
+border:3px solid #b30000;
+}
+
+button{
+width:100%;
+padding:16px;
+margin-top:15px;
+background:#b30000;
+color:white;
+font-size:20px;
+border:none;
+border-radius:14px;
+}
+
+.list{
+width:90%;
+max-width:420px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:15px;
+margin-top:20px;
+}
+
+.list h3{
+color:#b30000;
+margin-top:10px;
+}
+
+.time{
+font-size:18px;
+margin:5px;
+text-align:center;
+}
+
+.portHead{
+background:#c40000;
+color:white;
+text-align:center;
+padding:20px;
+font-size:22px;
+font-weight:bold;
+}
+
+.roundBar{
+display:flex;
+}
+
+.roundLeft{
+background:#e3d6b7;
+width:90px;
+text-align:center;
+padding:15px;
+font-weight:bold;
+font-size:20px;
+color:#a67c00;
+}
+
+.roundRight{
+background:#d99b00;
+color:white;
+flex:1;
+padding:15px;
+font-size:20px;
+font-weight:bold;
+}
+
+.successTitle{
+text-align:center;
+color:#2d5c8f;
+margin-top:25px;
+margin-bottom:5px;
+}
+
+.portCard{
+max-width:520px;
+margin:auto;
+background:white;
+border:4px solid #2ea44f;
+border-radius:25px;
+padding:25px;
+position:relative;
+margin-top:15px;
+}
+
+.check{
+position:absolute;
+left:-10px;
+top:18px;
+background:#2ea44f;
+color:white;
+font-size:26px;
+padding:10px 14px;
+border-radius:8px;
+}
+
+.logo{
+width:75px;
+position:absolute;
+right:20px;
+top:20px;
+}
+
+.info{
+font-size:18px;
+line-height:1.5;
+}
+
+hr{
+margin:18px 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="applyPage">
+
+<div class="title">
+ระบบการสมัครเข้าเป็นนักศึกษา<br>
+มหาวิทยาลัยเทพนคร
+</div>
+
+<div class="card">
+
+<input id="name" placeholder="ชื่อ - นามสกุล">
+<input id="school" placeholder="โรงเรียนเดิม">
+
+<select id="faculty" onchange="changeMajor()">
+<option value="">เลือกคณะ</option>
+<option value="engineer">คณะวิศวกรรมศาสตร์</option>
+<option value="comm">คณะนิเทศศาสตร์</option>
+<option value="business">คณะบริหารธุรกิจ</option>
+<option value="film">คณะดิจิทัลมีเดียและภาพยนตร์</option>
+<option value="psy">คณะจิตวิทยา</option>
+<option value="med">คณะแพทยศาสตร์</option>
+</select>
+
+<select id="major">
+<option>เลือกสาขา</option>
+</select>
+
+<button onclick="apply()">สมัคร</button>
+
+</div>
+
+<div class="list">
+<h3>รายชื่อผู้สมัคร</h3>
+<div id="applicants"></div>
+</div>
+
+</div>
+
+<div id="portfolioPage" style="display:none">
+
+<div class="portHead">
+ระบบสมัครเข้าศึกษาระดับปริญญาตรี
+</div>
+
+<div class="roundBar">
+<div class="roundLeft">รอบ<br>1</div>
+<div class="roundRight">
+Portfolio<br>
+<span style="font-size:14px">ยืนยันสิทธิ์เรียบร้อยแล้ว</span>
+</div>
+</div>
+
+<h1 class="successTitle">ยืนยันสิทธิ์เรียบร้อยแล้ว</h1>
+<div class="time" id="time"></div>
+
+<div class="portCard">
+
+<div class="check">✓</div>
+
+<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/62/Thammasat_University_Seal.svg">
+
+<div class="info">
+
+<b>มหาวิทยาลัยเทพนคร</b><br>
+จังหวัดปทุมธานี<br>
+วิทยาเขตรังสิต<br>
+
+<br>
+
+คณะ <span id="pfaculty"></span><br>
+สาขาวิชา <span id="pmajor"></span><br>
+
+<br>
+
+หลักสูตรระดับปริญญาตรี<br>
+หลักสูตรปกติ (ภาษาไทย)<br>
+โครงการรับตรงอิสระ
+
+<hr>
+
+<b>ข้อมูลเพิ่มเติม</b><br>
+
+ผู้สมัคร: <span id="pname"></span><br>
+โรงเรียน: <span id="pschool"></span>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let majors={
+engineer:["วิศวกรรมไฟฟ้า","วิศวกรรมโยธา"],
+comm:["ศิลปะการแสดง","การผลิตอีเว้นท์และการจัดนิทรรศการ"],
+business:["การออกแบบและการบริหารแฟชั่น","การวางแผนการเงินและการลงทุน"],
+film:["ภาพยนตร์"],
+psy:["จิตวิทยา"],
+med:["แพทยศาสตร์","สัตวแพทยศาสตร์"]
+}
+
+function changeMajor(){
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major")
+major.innerHTML=""
+majors[faculty].forEach(m=>{
+let option=document.createElement("option")
+option.text=m
+major.add(option)
+})
+}
+
+let applicants=[]
+
+function apply(){
+
+let name=document.getElementById("name").value
+let school=document.getElementById("school").value
+let faculty=document.getElementById("faculty")
+let facultyName=faculty.options[faculty.selectedIndex].text
+let major=document.getElementById("major").value
+
+if(name==""||school==""){
+alert("กรอกข้อมูลให้ครบ")
+return
+}
+
+applicants.push({name,faculty:facultyName})
+showApplicants()
+
+document.getElementById("applyPage").style.display="none"
+document.getElementById("portfolioPage").style.display="block"
+
+document.getElementById("pname").innerText=name
+document.getElementById("pschool").innerText=school
+document.getElementById("pfaculty").innerText=facultyName
+document.getElementById("pmajor").innerText=major
+
+startTime()
+
+}
+
+function showApplicants(){
+let box=document.getElementById("applicants")
+box.innerHTML=""
+applicants.forEach(a=>{
+box.innerHTML+=`<p>${a.name} - ${a.faculty}</p>`
+})
+}
+
+function startTime(){
+
+setInterval(()=>{
+
+let now=new Date()
+
+let date=now.toLocaleDateString("th-TH",{
+day:"numeric",
+month:"short",
+year:"2-digit"
+})
+
+let time=now.toLocaleTimeString("th-TH")
+
+document.getElementById("time").innerText=date+" "+time
+
+},1000)
+
+}
+
+</script>
+
+</body>
+                                   </html>
