@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>สมัครเข้าเป็นนักศึกษา มหาวิทยาลัยเทพนคร</title>
+
+<style>
+
+body{
+font-family:sans-serif;
+margin:0;
+background:linear-gradient(180deg,#c40000,#e9b6b6);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+/* กล่องสมัคร */
+
+.container{
+background:white;
+width:90%;
+max-width:420px;
+padding:30px;
+border-radius:22px;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+
+.title{
+text-align:center;
+font-size:26px;
+color:#b00000;
+font-weight:bold;
+}
+
+.subtitle{
+text-align:center;
+color:#666;
+margin-bottom:25px;
+}
+
+/* input */
+
+input,select{
+width:100%;
+padding:16px;
+margin-bottom:16px;
+border-radius:14px;
+border:1px solid #ddd;
+font-size:16px;
+background:#fafafa;
+}
+
+input:focus,select:focus{
+outline:none;
+border:2px solid #c40000;
+background:white;
+}
+
+.major{
+border:3px solid black;
+font-weight:bold;
+}
+
+/* ปุ่ม */
+
+button{
+width:100%;
+padding:16px;
+background:#c40000;
+color:white;
+border:none;
+border-radius:16px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#9f0000;
+}
+
+/* result */
+
+.result{
+display:none;
+width:100%;
+max-width:420px;
+margin:auto;
+padding:20px;
+background:#f2efe6;
+min-height:100vh;
+}
+
+.confirm{
+text-align:center;
+font-size:24px;
+color:#2c6db2;
+font-weight:bold;
+}
+
+.time{
+text-align:center;
+margin:10px 0 20px 0;
+}
+
+/* card */
+
+.card{
+background:white;
+border-radius:14px;
+border:3px solid #2ecc71;
+padding:20px;
+position:relative;
+box-shadow:0 5px 15px rgba(0,0,0,0.15);
+}
+
+.check{
+position:absolute;
+left:0;
+top:0;
+background:#2ecc71;
+color:white;
+padding:6px 12px;
+border-radius:0 0 10px 0;
+}
+
+.logo{
+position:absolute;
+right:15px;
+top:20px;
+width:70px;
+opacity:0.9;
+}
+
+.card p{
+margin:4px 0;
+line-height:1.5;
+}
+
+.more{
+text-align:center;
+margin-top:20px;
+color:#777;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container" id="formPage">
+
+<div class="title">สมัครเข้าเป็นนักศึกษา</div>
+<div class="subtitle">มหาวิทยาลัยเทพนคร</div>
+
+<input id="fullname" placeholder="ชื่อ - นามสกุล">
+<input id="school" placeholder="จบจากโรงเรียน">
+
+<select id="faculty" onchange="updateMajor()">
+<option value="">เลือกคณะ</option>
+
+<option value="วิศวกรรมศาสตร์">คณะวิศวกรรมศาสตร์</option>
+<option value="นิเทศศาสตร์">คณะนิเทศศาสตร์</option>
+<option value="บริหารธุรกิจ">คณะบริหารธุรกิจ</option>
+<option value="ดิจิทัลมีเดีย">คณะดิจิทัลมีเดียและศิลปะภาพยนตร์</option>
+<option value="จิตวิทยา">คณะจิตวิทยา</option>
+<option value="แพทยศาสตร์">คณะแพทยศาสตร์</option>
+
+</select>
+
+<select id="major" class="major">
+<option>เลือกสาขา</option>
+</select>
+
+<button onclick="submitForm()">ยืนยันการสมัคร</button>
+
+</div>
+
+
+<div class="result" id="resultPage">
+
+<div class="confirm">ยืนยันสิทธิ์เรียบร้อยแล้ว</div>
+<div class="time">14 ก.พ. 70 08:22:25 น.</div>
+
+<div class="card">
+
+<div class="check">✔</div>
+
+<img src="logo.png" class="logo">
+
+<div id="facultyDetail"></div>
+
+<br>
+
+<p>ชื่อ - นามสกุล : <span id="showName"></span></p>
+<p>สถานศึกษาเดิม : <span id="showSchool"></span></p>
+
+</div>
+
+<div class="more">ข้อมูลเพิ่มเติม ▼</div>
+
+</div>
+
+<script>
+
+function updateMajor(){
+
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major")
+
+major.innerHTML=""
+
+let majors=[]
+
+if(faculty==="วิศวกรรมศาสตร์"){
+majors=["สาขาวิศวะไฟฟ้า","สาขาวิศวะโยธา"]
+}
+
+if(faculty==="นิเทศศาสตร์"){
+majors=["สาขาศิลปะการแสดง","สาขาการผลิตอีเว้นท์และการจัดการนิทรรศการ"]
+}
+
+if(faculty==="บริหารธุรกิจ"){
+majors=["สาขาการออกแบบและการบริหาร แฟชั่น","สาขาการวางแผนการเงินและการลงทุน"]
+}
+
+if(faculty==="ดิจิทัลมีเดีย"){
+majors=["สาขาภาพยนตร์"]
+}
+
+if(faculty==="จิตวิทยา"){
+majors=["สาขาจิตวิทยา"]
+}
+
+if(faculty==="แพทยศาสตร์"){
+majors=["สาขาแพทย์ศาสตร์","สาขาสัตว์แพทย์"]
+}
+
+majors.forEach(function(m){
+let option=document.createElement("option")
+option.text=m
+major.add(option)
+})
+
+}
+
+function submitForm(){
+
+let name=document.getElementById("fullname").value
+let school=document.getElementById("school").value
+let major=document.getElementById("major").value
+
+let detail=""
+
+if(major==="สาขาภาพยนตร์"){
+detail=`
+<p><b>มหาวิทยาลัยเทพนคร</b></p>
+<p>ปทุมธานี</p>
+<p>วิทยาเขตรังสิต</p>
+
+<br>
+
+<p>คณะดิจิทัลมีเดียและศิลปะภาพยนตร์</p>
+<p>สาขาภาพยนตร์</p>
+<p>หลักสูตรศิลปกรรมศาสตรบัณฑิต (ศป.บ.)</p>
+<p>ภาพยนตร์และสื่อดิจิทัล</p>
+<p>หลักสูตรปกติ</p>
+<p>โครงการรับตรง</p>
+`
+}
+
+else{
+detail=`
+<p><b>มหาวิทยาลัยเทพนคร</b></p>
+<p>ปทุมธานี</p>
+<p>วิทยาเขตรังสิต</p>
+
+<br>
+
+<p>${major}</p>
+<p>หลักสูตรระดับปริญญาตรี</p>
+<p>หลักสูตรปกติ</p>
+<p>โครงการรับตรง</p>
+`
+}
+
+document.getElementById("facultyDetail").innerHTML=detail
+
+document.getElementById("showName").innerText=name
+document.getElementById("showSchool").innerText=school
+
+document.getElementById("formPage").style.display="none"
+document.getElementById("resultPage").style.display="block"
+
+}
+
+</script>
+
+</body>
+  </html>
