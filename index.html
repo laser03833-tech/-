@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ระบบสมัครเข้าศึกษา</title>
+
+<style>
+
+body{
+font-family:sans-serif;
+margin:0;
+background:#f0f0f0;
+text-align:center;
+}
+
+/* HEADER */
+
+.header{
+background:#b80000;
+color:white;
+padding:20px;
+font-size:26px;
+font-weight:bold;
+}
+
+/* BOX สมัคร */
+
+.box{
+background:white;
+max-width:420px;
+margin:30px auto;
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,0.15);
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:12px;
+border-radius:10px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
+button{
+width:100%;
+margin-top:15px;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#c40000;
+color:white;
+font-size:18px;
+cursor:pointer;
+}
+
+/* PORTFOLIO BAR */
+
+.topbar{
+display:flex;
+background:#f6a800;
+color:white;
+font-weight:bold;
+}
+
+.round{
+background:#f1e3c7;
+color:#c88800;
+padding:12px;
+text-align:center;
+font-size:18px;
+}
+
+.port{
+padding:12px;
+font-size:22px;
+text-align:left;
+}
+
+.port span{
+font-size:14px;
+}
+
+/* RESULT */
+
+.title{
+color:#2f5f97;
+font-size:30px;
+margin-top:20px;
+}
+
+.time{
+font-size:18px;
+margin-top:5px;
+}
+
+.card{
+background:#eee;
+border:3px solid #2fb34a;
+border-radius:12px;
+padding:25px;
+max-width:420px;
+margin:20px auto;
+position:relative;
+text-align:left;
+}
+
+.corner{
+position:absolute;
+top:0;
+left:0;
+width:45px;
+height:45px;
+background:#2fb34a;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+clip-path: polygon(0 0,100% 0,0 100%);
+font-size:20px;
+}
+
+.logo{
+position:absolute;
+right:20px;
+top:20px;
+width:70px;
+}
+
+.uni{
+font-size:22px;
+font-weight:bold;
+}
+
+.card p{
+margin:5px 0;
+font-size:18px;
+line-height:1.5;
+}
+
+.newbtn{
+width:200px;
+margin-top:10px;
+background:#b80000;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- หน้า สมัคร -->
+
+<div id="formPage">
+
+<div class="header">
+ระบบสมัครเข้าศึกษา
+</div>
+
+<div class="box">
+
+<input id="name" placeholder="ชื่อ - นามสกุล">
+
+<input id="school" placeholder="สถานศึกษาเดิม">
+
+<select id="faculty" onchange="loadMajor()">
+<option value="">เลือกคณะ</option>
+
+<option>วิศวกรรมศาสตร์</option>
+<option>นิเทศศาสตร์</option>
+<option>บริหารธุรกิจ</option>
+<option>ดิจิทัลมีเดียและศิลปะภาพยนตร์</option>
+<option>จิตวิทยา</option>
+<option>แพทยศาสตร์</option>
+
+</select>
+
+<select id="major">
+<option value="">เลือกสาขา</option>
+</select>
+
+<button onclick="apply()">สมัคร</button>
+
+</div>
+
+</div>
+
+<!-- หน้า ยืนยัน -->
+
+<div id="resultPage" style="display:none">
+
+<div class="topbar">
+<div class="round">รอบ<br>1</div>
+
+<div class="port">
+Portfolio
+<br>
+<span>ยืนยันสิทธิ์เรียบร้อยแล้ว</span>
+</div>
+
+</div>
+
+<h1 class="title">ยืนยันสิทธิ์เรียบร้อยแล้ว</h1>
+
+<div class="time" id="time"></div>
+
+<div class="card">
+
+<div class="corner">✓</div>
+
+<img src="logo.png" class="logo">
+
+<p class="uni">มหาวิทยาลัยเทพนคร</p>
+<p>ปทุมธานี</p>
+
+<p id="facultyShow"></p>
+<p id="majorShow"></p>
+
+<p>หลักสูตรระดับปริญญาตรี</p>
+<p>หลักสูตรปกติ</p>
+<p>โครงการรับตรง</p>
+
+</div>
+
+<button class="newbtn" onclick="newApply()">สมัครใหม่</button>
+
+</div>
+
+<script>
+
+/* รายการสาขา */
+
+const majors={
+
+"วิศวกรรมศาสตร์":[
+"วิศวะไฟฟ้า",
+"วิศวะโยธา"
+],
+
+"นิเทศศาสตร์":[
+"ศิลปะการแสดง",
+"การผลิตอีเว้นท์และการจัดการนิทรรศการ"
+],
+
+"บริหารธุรกิจ":[
+"การออกแบบและการบริหารแฟชั่น",
+"การวางแผนการเงินและการลงทุน"
+],
+
+"ดิจิทัลมีเดียและศิลปะภาพยนตร์":[
+"ภาพยนตร์"
+],
+
+"จิตวิทยา":[
+"จิตวิทยา"
+],
+
+"แพทยศาสตร์":[
+"แพทย์ศาสตร์",
+"สัตว์แพทย์"
+]
+
+}
+
+/* โหลดสาขา */
+
+function loadMajor(){
+
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major")
+
+major.innerHTML='<option value="">เลือกสาขา</option>'
+
+if(!majors[faculty]) return
+
+majors[faculty].forEach(function(m){
+
+let op=document.createElement("option")
+op.value=m
+op.text=m
+major.appendChild(op)
+
+})
+
+}
+
+/* สมัคร */
+
+function apply(){
+
+let name=document.getElementById("name").value
+let school=document.getElementById("school").value
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major").value
+
+if(!name||!school||!faculty||!major){
+alert("กรอกข้อมูลให้ครบ")
+return
+}
+
+document.getElementById("facultyShow").innerHTML="คณะ "+faculty
+document.getElementById("majorShow").innerHTML="สาขา "+major
+
+document.getElementById("formPage").style.display="none"
+document.getElementById("resultPage").style.display="block"
+
+}
+
+/* สมัครใหม่ */
+
+function newApply(){
+
+document.getElementById("formPage").style.display="block"
+document.getElementById("resultPage").style.display="none"
+
+document.getElementById("name").value=""
+document.getElementById("school").value=""
+document.getElementById("faculty").value=""
+document.getElementById("major").innerHTML='<option value="">เลือกสาขา</option>'
+
+}
+
+/* เวลา */
+
+function updateTime(){
+
+let now=new Date()
+
+let months=["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."]
+
+let d=String(now.getDate()).padStart(2,'0')
+let m=months[now.getMonth()]
+let y=(now.getFullYear()+543).toString().slice(-2)
+
+let h=String(now.getHours()).padStart(2,'0')
+let min=String(now.getMinutes()).padStart(2,'0')
+let s=String(now.getSeconds()).padStart(2,'0')
+
+document.getElementById("time").innerHTML=
+`${d} ${m} ${y} ${h}:${min}:${s} น.`
+
+}
+
+setInterval(updateTime,1000)
+
+</script>
+
+</body>
+  </html>
