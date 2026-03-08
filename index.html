@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ผลการยืนยันสิทธิ์</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background:#f4efe6;
+margin:0;
+display:flex;
+justify-content:center;
+}
+
+.wrapper{
+width:100%;
+max-width:420px;
+background:#f4efe6;
+}
+
+/* แถบด้านบน */
+
+.header{
+display:flex;
+}
+
+.round{
+background:#efe6d0;
+width:70px;
+text-align:center;
+padding:15px 5px;
+color:#e59a00;
+font-weight:bold;
+font-size:20px;
+}
+
+.portfolio{
+flex:1;
+background:#f6a400;
+color:white;
+padding:15px;
+font-size:24px;
+}
+
+.portfolio small{
+display:block;
+font-size:14px;
+margin-top:4px;
+}
+
+/* เนื้อหา */
+
+.content{
+padding:20px;
+text-align:center;
+}
+
+.success{
+font-size:26px;
+font-weight:bold;
+color:#1d4f7a;
+margin-bottom:10px;
+}
+
+.time{
+margin-bottom:20px;
+color:#333;
+}
+
+/* กล่องข้อมูล */
+
+.card{
+background:white;
+border:2px solid #2ecc71;
+border-radius:12px;
+padding:20px;
+text-align:left;
+position:relative;
+}
+
+.check{
+position:absolute;
+top:0;
+left:0;
+background:#2ecc71;
+color:white;
+padding:6px 10px;
+border-radius:0 0 10px 0;
+font-weight:bold;
+}
+
+.logo{
+position:absolute;
+right:15px;
+top:15px;
+width:70px;
+opacity:0.7;
+}
+
+.more{
+margin-top:20px;
+text-align:center;
+color:#666;
+cursor:pointer;
+}
+
+.detail{
+display:none;
+margin-top:15px;
+font-size:14px;
+color:#444;
+}
+
+</style>
+
+<script>
+
+function toggleDetail(){
+
+var d=document.getElementById("detail");
+
+if(d.style.display==="block"){
+d.style.display="none";
+}else{
+d.style.display="block";
+}
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="header">
+
+<div class="round">
+รอบ<br>1
+</div>
+
+<div class="portfolio">
+Portfolio
+<small>ยืนยันสิทธิ์เรียบร้อยแล้ว</small>
+</div>
+
+</div>
+
+<div class="content">
+
+<div class="success">
+ยืนยันสิทธิ์เรียบร้อยแล้ว
+</div>
+
+<div class="time">
+14 ก.พ. 70 08:22:25 น.
+</div>
+
+<div class="card">
+
+<div class="check">✔</div>
+
+<img class="logo"
+src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Seal_of_KMUTNB.png">
+
+<b>มหาวิทยาลัยเทพนคร</b><br>
+ปทุมธานี<br>
+วิทยาเขตรังสิต<br>
+คณะวิศวกรรมศาสตร์<br>
+สาขาวิศวะไฟฟ้า<br>
+ภาคปกติ<br>
+(หลักสูตรนานาชาติ)
+
+</div>
+
+<div class="more" onclick="toggleDetail()">
+ข้อมูลเพิ่มเติม ▼
+</div>
+
+<div class="detail" id="detail">
+
+ชื่อ - นามสกุล : ตัวอย่าง ผู้สมัคร<br>
+สถานศึกษาเดิม : โรงเรียนตัวอย่างวิทยา
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
