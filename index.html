@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ยืนยันสิทธิ์</title>
+
+<style>
+
+body{
+font-family:sans-serif;
+background:#e8e3db;
+margin:0;
+padding:30px;
+text-align:center;
+}
+
+.title{
+color:#2b6cb0;
+font-size:28px;
+font-weight:bold;
+}
+
+.time{
+margin-top:10px;
+font-size:18px;
+}
+
+.card{
+background:#efefef;
+border:4px solid #2bb673;
+border-radius:20px;
+padding:25px;
+max-width:420px;
+margin:30px auto;
+text-align:left;
+position:relative;
+}
+
+.check{
+position:absolute;
+top:-15px;
+left:-15px;
+background:#2bb673;
+color:white;
+width:40px;
+height:40px;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:bold;
+}
+
+.logo{
+position:absolute;
+right:20px;
+top:20px;
+width:70px;
+}
+
+.card p{
+margin:4px 0;
+font-size:16px;
+}
+
+.card b{
+font-size:18px;
+}
+
+.more{
+margin-top:15px;
+color:#666;
+cursor:pointer;
+}
+
+.extra{
+display:none;
+max-width:420px;
+margin:auto;
+margin-top:10px;
+background:#f3f3f3;
+padding:15px;
+border-radius:10px;
+text-align:left;
+}
+
+.extra p{
+margin:4px 0;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="title">
+ยืนยันสิทธิ์เรียบร้อยแล้ว
+</div>
+
+<div class="time" id="time"></div>
+
+<div class="card">
+
+<div class="check">✓</div>
+
+<img src="logo.png" class="logo">
+
+<p><b>มหาวิทยาลัยเทพนคร</b></p>
+<p>ปทุมธานี</p>
+<p>วิทยาเขตรังสิต</p>
+
+<br>
+
+<p><b>สาขาการผลิตอีเว้นท์และการจัดการนิทรรศการ</b></p>
+<p>คณะนิเทศศาสตร์</p>
+<p>หลักสูตรระดับปริญญาตรี</p>
+<p>หลักสูตรปกติ</p>
+<p>โครงการรับตรง</p>
+
+</div>
+
+<div class="more" onclick="toggleInfo()">
+ข้อมูลเพิ่มเติม ▼
+</div>
+
+<div class="extra" id="extra">
+
+<p>ชื่อ - นามสกุล : <span id="name">จีซัง คิม</span></p>
+<p>สถานศึกษาเดิม : <span id="school">อัสสัมชัญ</span></p>
+
+</div>
+
+<script>
+
+function toggleInfo(){
+
+let box = document.getElementById("extra")
+
+if(box.style.display === "block"){
+box.style.display="none"
+}else{
+box.style.display="block"
+}
+
+}
+
+function updateTime(){
+
+let now = new Date()
+
+let date = now.toLocaleDateString("th-TH")
+let time = now.toLocaleTimeString("th-TH")
+
+document.getElementById("time").innerHTML = date + " " + time + " น."
+
+}
+
+updateTime()
+
+</script>
+
+</body>
+</html>
