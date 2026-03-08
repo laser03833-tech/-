@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>มหาวิทยาลัยเทพนคร</title>
+
+<style>
+
+body{
+font-family:Tahoma;
+background:#e6e1db;
+margin:0;
+}
+
+/* หัวข้อ */
+
+.title{
+text-align:center;
+font-size:30px;
+color:#2d5d8f;
+margin-top:50px;
+font-weight:bold;
+}
+
+/* กล่องสมัคร */
+
+.card{
+background:#f2f2f2;
+width:90%;
+max-width:420px;
+margin:30px auto;
+padding:25px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+input,select{
+width:100%;
+padding:16px;
+margin:10px 0;
+border-radius:14px;
+border:2px solid #ccc;
+font-size:18px;
+}
+
+select{
+border:3px solid black;
+background:white;
+}
+
+button{
+width:100%;
+padding:16px;
+margin-top:15px;
+background:#2f9d62;
+color:white;
+font-size:20px;
+border:none;
+border-radius:14px;
+cursor:pointer;
+}
+
+/* หน้า Portfolio */
+
+.port-header{
+background:#b30000;
+color:white;
+text-align:center;
+padding:20px;
+font-size:24px;
+}
+
+.port-title{
+background:#d89c00;
+color:white;
+padding:15px;
+font-size:22px;
+}
+
+.success{
+text-align:center;
+font-size:30px;
+color:#2c4f7c;
+margin-top:20px;
+}
+
+.time{
+text-align:center;
+font-size:20px;
+margin-bottom:20px;
+}
+
+.port-box{
+width:90%;
+max-width:420px;
+margin:auto;
+background:white;
+border-radius:12px;
+border:3px solid #2e8b57;
+padding:20px;
+position:relative;
+padding-left:70px;
+}
+
+.check{
+position:absolute;
+left:-20px;
+top:-20px;
+background:#2e8b57;
+color:white;
+width:60px;
+height:60px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+border-radius:12px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="applyPage">
+
+<div class="title">
+ระบบสมัครเข้าศึกษา
+</div>
+
+<div class="card">
+
+<input id="name" placeholder="ชื่อ - นามสกุล">
+
+<input id="school" placeholder="โรงเรียนเดิม">
+
+<select id="faculty">
+
+<option>เลือกคณะ</option>
+
+<option>คณะวิศวกรรมศาสตร์</option>
+<option>คณะนิเทศศาสตร์</option>
+<option>คณะบริหารธุรกิจ</option>
+<option>คณะดิจิทัลมีเดียและภาพยนตร์</option>
+<option>คณะจิตวิทยา</option>
+<option>คณะแพทยศาสตร์</option>
+
+</select>
+
+<select id="major">
+
+<option>เลือกสาขา</option>
+
+<option>วิศวกรรมไฟฟ้า</option>
+<option>วิศวกรรมโยธา</option>
+
+<option>ศิลปะการแสดง</option>
+<option>การผลิตอีเว้นท์</option>
+
+<option>การออกแบบแฟชั่น</option>
+<option>การวางแผนการเงิน</option>
+
+<option>ภาพยนตร์</option>
+
+<option>จิตวิทยาประยุกต์</option>
+
+<option>แพทยศาสตร์</option>
+<option>สัตวแพทยศาสตร์</option>
+
+</select>
+
+<button onclick="apply()">สมัคร</button>
+
+</div>
+
+</div>
+
+<div id="portfolioPage" style="display:none">
+
+<div class="port-header">
+ระบบสมัครเข้าศึกษาระดับปริญญาตรี
+</div>
+
+<div class="port-title">
+รอบ 1 Portfolio
+</div>
+
+<div class="success">
+ยืนยันสิทธิ์เรียบร้อยแล้ว
+</div>
+
+<div class="time" id="time"></div>
+
+<div class="port-box">
+
+<div class="check">✓</div>
+
+<b>มหาวิทยาลัยเทพนคร</b><br><br>
+
+จังหวัดปทุมธานี<br>
+วิทยาเขตรังสิต<br><br>
+
+<b>ผู้สมัคร</b><br>
+<span id="pname"></span><br><br>
+
+<b>โรงเรียนเดิม</b><br>
+<span id="pschool"></span><br><br>
+
+<b>คณะ</b><br>
+<span id="pfaculty"></span><br><br>
+
+<b>สาขา</b><br>
+<span id="pmajor"></span>
+
+</div>
+
+</div>
+
+<script>
+
+function apply(){
+
+let name=document.getElementById("name").value
+let school=document.getElementById("school").value
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major").value
+
+if(name==""||school==""){
+alert("กรอกข้อมูลให้ครบ")
+return
+}
+
+document.getElementById("applyPage").style.display="none"
+document.getElementById("portfolioPage").style.display="block"
+
+document.getElementById("pname").innerText=name
+document.getElementById("pschool").innerText=school
+document.getElementById("pfaculty").innerText=faculty
+document.getElementById("pmajor").innerText=major
+
+updateTime()
+
+}
+
+function updateTime(){
+
+setInterval(()=>{
+
+let now=new Date()
+
+let time=now.toLocaleDateString("th-TH")+" เวลา "+now.toLocaleTimeString("th-TH")
+
+document.getElementById("time").innerText=time
+
+},1000)
+
+}
+
+</script>
+
+</body>
+  </html>
