@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>มหาวิทยาลัยเทพนคร</title>
+
+<style>
+
+body{
+font-family:tahoma;
+margin:0;
+background:#efefef;
+}
+
+/* HEADER */
+
+.header{
+background:#b30000;
+color:white;
+text-align:center;
+padding:25px;
+font-size:24px;
+font-weight:bold;
+}
+
+.subheader{
+background:#c88a00;
+color:white;
+padding:18px;
+font-size:22px;
+}
+
+/* FORM */
+
+.card{
+background:white;
+width:90%;
+max-width:420px;
+margin:30px auto;
+padding:25px;
+border-radius:18px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+input,select{
+width:100%;
+padding:15px;
+margin:10px 0;
+border-radius:12px;
+border:2px solid #ddd;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:15px;
+background:#b30000;
+color:white;
+border:none;
+border-radius:12px;
+font-size:18px;
+}
+
+/* PORTFOLIO */
+
+.success{
+text-align:center;
+font-size:34px;
+color:#3f5f85;
+margin-top:25px;
+font-weight:bold;
+}
+
+.time{
+text-align:center;
+font-size:18px;
+margin:15px;
+}
+
+.box{
+width:90%;
+max-width:420px;
+margin:auto;
+background:white;
+border-radius:16px;
+border:4px solid #2e8b57;
+padding:22px;
+line-height:1.8;
+}
+
+.detail{
+margin-top:10px;
+font-size:17px;
+}
+
+.more{
+text-align:center;
+margin:25px;
+font-size:18px;
+cursor:pointer;
+}
+
+.extra{
+display:none;
+text-align:center;
+font-size:17px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PAGE สมัคร -->
+
+<div id="applyPage">
+
+<div class="header">
+ระบบสมัครเข้าศึกษาระดับปริญญาตรี
+</div>
+
+<div class="subheader">
+รอบ 1 Portfolio
+</div>
+
+<div class="card">
+
+<input id="name" placeholder="ชื่อ - นามสกุล">
+<input id="school" placeholder="โรงเรียนเดิม">
+
+<select id="faculty" onchange="changeMajor()">
+
+<option value="">เลือกคณะ</option>
+
+<option value="eng">คณะ วิศวกรรมศาสตร์</option>
+<option value="com">คณะ นิเทศศาสตร์</option>
+<option value="bus">คณะ บริหารธุรกิจ</option>
+<option value="film">คณะดิจิทัลมีเดียและศิลปะภาพยนตร์</option>
+<option value="psy">คณะจิตวิทยา</option>
+<option value="med">คณะแพทยศาสตร์</option>
+
+</select>
+
+<select id="major">
+<option>เลือกสาขา</option>
+</select>
+
+<button onclick="apply()">สมัคร</button>
+
+</div>
+
+</div>
+
+
+<!-- PAGE PORTFOLIO -->
+
+<div id="portfolioPage" style="display:none">
+
+<div class="header">
+ระบบสมัครเข้าศึกษาระดับปริญญาตรี
+</div>
+
+<div class="subheader">
+รอบ 1 Portfolio
+</div>
+
+<div class="success">
+ยืนยันสิทธิ์เรียบร้อยแล้ว
+</div>
+
+<div class="time" id="time"></div>
+
+<div class="box">
+
+<b>มหาวิทยาลัยเทพนคร</b>
+
+<div class="detail">
+จังหวัดปทุมธานี<br>
+วิทยาเขตรังสิต
+</div>
+
+<div class="detail">
+<b>คณะ</b><br>
+<span id="pfaculty"></span>
+</div>
+
+<div class="detail">
+<b>สาขา</b><br>
+<span id="pmajor"></span>
+</div>
+
+<div class="detail">
+หลักสูตรระดับปริญญาตรี<br>
+หลักสูตรปกติ (ภาษาไทย)<br>
+โครงการรับตรงอิสระ
+</div>
+
+</div>
+
+<div class="more" onclick="toggleInfo()">
+ข้อมูลเพิ่มเติม ▼
+</div>
+
+<div class="extra" id="extra">
+
+<b>ผู้สมัคร</b><br>
+<span id="pname"></span>
+
+<br><br>
+
+<b>โรงเรียนเดิม</b><br>
+<span id="pschool"></span>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* สาขา */
+
+let majors={
+
+eng:[
+"สาขาวิศวะไฟฟ้า",
+"สาขาวิศวะโยธา"
+],
+
+com:[
+"สาขาศิลปะการแสดง",
+"สาขาการผลิตอีเว้นท์และการจัดการนิทรรศการ"
+],
+
+bus:[
+"สาขาการออกแบบและการบริหาร แฟชั่น",
+"สาขาการวางแผนการเงินและการลงทุน"
+],
+
+film:[
+"สาขาภาพยนตร์"
+],
+
+psy:[
+"สาขาจิตวิทยา"
+],
+
+med:[
+"สาขาแพทย์ศาสตร์",
+"สาขาสัตว์แพทย์"
+]
+
+}
+
+/* เปลี่ยนสาขา */
+
+function changeMajor(){
+
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major")
+
+major.innerHTML=""
+
+majors[faculty].forEach(m=>{
+let op=document.createElement("option")
+op.text=m
+major.add(op)
+})
+
+}
+
+/* เวลา */
+
+function formatThaiDate(){
+
+let months=[
+"ม.ค","ก.พ","มี.ค","เม.ย","พ.ค","มิ.ย",
+"ก.ค","ส.ค","ก.ย","ต.ค","พ.ย","ธ.ค"
+]
+
+let d=new Date()
+
+let day=d.getDate()
+let month=months[d.getMonth()]
+let year=(d.getFullYear()+543).toString().slice(-2)
+
+let time=d.toLocaleTimeString("th-TH")
+
+return day+" "+month+" "+year+" "+time
+
+}
+
+function startTime(){
+
+setInterval(()=>{
+
+document.getElementById("time").innerText=formatThaiDate()
+
+},1000)
+
+}
+
+/* สมัคร */
+
+function apply(){
+
+let name=document.getElementById("name").value
+let school=document.getElementById("school").value
+let faculty=document.getElementById("faculty")
+let facultyName=faculty.options[faculty.selectedIndex].text
+let major=document.getElementById("major").value
+
+document.getElementById("applyPage").style.display="none"
+document.getElementById("portfolioPage").style.display="block"
+
+document.getElementById("pname").innerText=name
+document.getElementById("pschool").innerText=school
+document.getElementById("pfaculty").innerText=facultyName
+document.getElementById("pmajor").innerText=major
+
+startTime()
+
+}
+
+/* ข้อมูลเพิ่มเติม */
+
+function toggleInfo(){
+
+let box=document.getElementById("extra")
+
+if(box.style.display=="none"){
+box.style.display="block"
+}else{
+box.style.display="none"
+}
+
+}
+
+</script>
+
+</body>
+  </html>
