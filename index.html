@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ระบบสมัครเรียน มหาวิทยาลัยเทพนคร</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#f4f4f4;
+}
+
+.header{
+
+background:#8B0000;
+color:white;
+text-align:center;
+padding:20px;
+
+}
+
+.logo{
+
+width:120px;
+margin-bottom:10px;
+
+}
+
+.container{
+
+max-width:700px;
+margin:auto;
+padding:20px;
+
+}
+
+.card{
+
+background:white;
+padding:25px;
+margin-top:20px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+text-align:center;
+
+}
+
+button{
+
+background:#ff9900;
+border:none;
+color:white;
+padding:12px 20px;
+font-size:16px;
+border-radius:6px;
+margin:10px;
+cursor:pointer;
+
+}
+
+input,select{
+
+width:90%;
+padding:10px;
+margin:10px;
+font-size:16px;
+
+}
+
+.pass{
+
+color:green;
+font-size:22px;
+font-weight:bold;
+
+}
+
+.paper{
+
+display:none;
+background:white;
+max-width:800px;
+margin:auto;
+margin-top:40px;
+padding:40px;
+border:1px solid #ccc;
+
+}
+
+.paper h2{
+
+text-align:center;
+
+}
+
+.print{
+
+text-align:center;
+margin-top:20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<img src="logo.png" class="logo">
+
+<h2>มหาวิทยาลัยเทพนคร</h2>
+
+<p>วิทยาเขตรังสิต</p>
+
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<button onclick="showApply()">สมัครเรียน</button>
+
+<button onclick="showResult()">ตรวจสอบผล</button>
+
+</div>
+
+<div class="card" id="apply" style="display:none">
+
+<h3>สมัครเข้าศึกษา</h3>
+
+<input id="name" placeholder="ชื่อผู้สมัคร">
+
+<select id="faculty" onchange="updateMajor()">
+
+<option>เลือกคณะ</option>
+
+<option value="eng">คณะวิศวกรรมศาสตร์</option>
+<option value="com">คณะนิเทศศาสตร์</option>
+<option value="bus">คณะบริหารธุรกิจ</option>
+<option value="film">คณะดิจิทัลมีเดียและศิลปะภาพยนตร์</option>
+<option value="psy">คณะจิตวิทยา</option>
+<option value="med">คณะแพทยศาสตร์</option>
+
+</select>
+
+<select id="major">
+
+<option>เลือกสาขา</option>
+
+</select>
+
+<button onclick="apply()">ส่งใบสมัคร</button>
+
+<p id="applyResult"></p>
+
+</div>
+
+<div class="card" id="result" style="display:none">
+
+<h3>ตรวจสอบผลการสมัคร</h3>
+
+<input id="searchName" placeholder="กรอกชื่อผู้สมัคร">
+
+<br>
+
+<button onclick="check()">ตรวจสอบ</button>
+
+<div id="showResult"></div>
+
+</div>
+
+</div>
+
+<div class="paper" id="confirmPaper">
+
+<img src="logo.png" width="120">
+
+<h2>มหาวิทยาลัยเทพนคร</h2>
+
+<p style="text-align:center;">วิทยาเขตรังสิต</p>
+
+<h3 style="text-align:center;">ใบยืนยันสิทธิ์เข้าศึกษา</h3>
+
+<p>
+
+ขอรับรองว่า
+
+<br><br>
+
+ชื่อผู้สมัคร : <b id="confirmName"></b>
+
+<br>
+
+สาขา : <b id="confirmMajor"></b>
+
+<br><br>
+
+ได้ผ่านการคัดเลือกเข้าศึกษาในระดับปริญญาตรี  
+ภาคปกติ หลักสูตรนานาชาติ
+
+<br><br>
+
+สถานะ : <b style="color:green;">ยืนยันสิทธิ์เรียบร้อยแล้ว</b>
+
+<br><br>
+
+จึงออกเอกสารฉบับนี้ไว้เป็นหลักฐาน
+
+</p>
+
+<div class="print">
+
+<button onclick="window.print()">พิมพ์ใบยืนยันสิทธิ์</button>
+
+</div>
+
+</div>
+
+<script>
+
+let studentName=""
+let studentMajor=""
+
+function showApply(){
+
+document.getElementById("apply").style.display="block"
+document.getElementById("result").style.display="none"
+
+}
+
+function showResult(){
+
+document.getElementById("apply").style.display="none"
+document.getElementById("result").style.display="block"
+
+}
+
+function updateMajor(){
+
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major")
+
+major.innerHTML=""
+
+if(faculty=="eng"){
+
+major.innerHTML+="<option>วิศวกรรมไฟฟ้า</option>"
+major.innerHTML+="<option>วิศวกรรมโยธา</option>"
+
+}
+
+if(faculty=="com"){
+
+major.innerHTML+="<option>ศิลปะการแสดง</option>"
+major.innerHTML+="<option>การผลิตอีเว้นท์และการจัดการนิทรรศการ</option>"
+
+}
+
+if(faculty=="bus"){
+
+major.innerHTML+="<option>การออกแบบและการบริหารแฟชั่น</option>"
+major.innerHTML+="<option>การวางแผนการเงินและการลงทุน</option>"
+
+}
+
+if(faculty=="film"){
+
+major.innerHTML+="<option>ภาพยนตร์</option>"
+
+}
+
+if(faculty=="psy"){
+
+major.innerHTML+="<option>จิตวิทยา</option>"
+
+}
+
+if(faculty=="med"){
+
+major.innerHTML+="<option>แพทยศาสตร์</option>"
+major.innerHTML+="<option>สัตวแพทยศาสตร์</option>"
+
+}
+
+}
+
+function apply(){
+
+studentName=document.getElementById("name").value
+studentMajor=document.getElementById("major").value
+
+document.getElementById("applyResult").innerHTML="ส่งใบสมัครเรียบร้อยแล้ว"
+
+}
+
+function check(){
+
+let name=document.getElementById("searchName").value
+
+if(name==studentName){
+
+document.getElementById("showResult").innerHTML=
+
+"<div class='pass'>ยืนยันสิทธิ์เรียบร้อยแล้ว</div><br>"+studentMajor+"<br><button onclick='showConfirm()'>ใบยืนยันสิทธิ์</button>"
+
+}else{
+
+document.getElementById("showResult").innerHTML="ไม่พบข้อมูลผู้สมัคร"
+
+}
+
+}
+
+function showConfirm(){
+
+document.getElementById("confirmName").innerText=studentName
+document.getElementById("confirmMajor").innerText=studentMajor
+
+document.getElementById("confirmPaper").style.display="block"
+
+window.scrollTo(0,document.body.scrollHeight)
+
+}
+
+</script>
+
+</body>
+
+  </html>
