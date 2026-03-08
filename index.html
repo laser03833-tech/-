@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>มหาวิทยาลัยเทพนคร</title>
+
+<style>
+
+body{
+font-family:tahoma;
+background:#f4f4f4;
+margin:0;
+}
+
+.title{
+text-align:center;
+font-size:28px;
+color:#b30000;
+margin-top:40px;
+font-weight:bold;
+}
+
+.card{
+background:white;
+width:90%;
+max-width:420px;
+margin:20px auto;
+padding:25px;
+border-radius:20px;
+box-shadow:0 6px 20px rgba(0,0,0,0.1);
+}
+
+input,select{
+width:100%;
+padding:16px;
+margin:10px 0;
+border-radius:14px;
+border:2px solid #ddd;
+font-size:18px;
+}
+
+select{
+border:3px solid #b30000;
+}
+
+button{
+width:100%;
+padding:16px;
+margin-top:15px;
+background:#b30000;
+color:white;
+font-size:20px;
+border:none;
+border-radius:14px;
+}
+
+.list{
+width:90%;
+max-width:420px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:15px;
+margin-top:20px;
+}
+
+.list h3{
+color:#b30000;
+}
+
+.time{
+text-align:center;
+font-size:18px;
+margin-bottom:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- หน้าแรก -->
+
+<div id="applyPage">
+
+<div class="title">
+ระบบการสมัครเข้าเป็นนักศึกษา<br>
+มหาวิทยาลัยเทพนคร
+</div>
+
+<div class="card">
+
+<input id="name" placeholder="ชื่อ - นามสกุล">
+<input id="school" placeholder="โรงเรียนเดิม">
+
+<select id="faculty" onchange="changeMajor()">
+<option value="">เลือกคณะ</option>
+
+<option value="engineer">คณะวิศวกรรมศาสตร์</option>
+<option value="comm">คณะนิเทศศาสตร์</option>
+<option value="business">คณะบริหารธุรกิจ</option>
+<option value="film">คณะดิจิทัลมีเดียและภาพยนตร์</option>
+<option value="psy">คณะจิตวิทยา</option>
+<option value="med">คณะแพทยศาสตร์</option>
+
+</select>
+
+<select id="major">
+<option>เลือกสาขา</option>
+</select>
+
+<button onclick="apply()">สมัคร</button>
+
+</div>
+
+<div class="list">
+
+<h3>รายชื่อผู้สมัคร</h3>
+
+<div id="applicants"></div>
+
+</div>
+
+</div>
+
+<!-- หน้า Portfolio -->
+
+<div id="portfolioPage" style="display:none;background:#f3ecdf;padding-bottom:40px;">
+
+<div style="display:flex">
+
+<div style="background:#e8dcc0;width:80px;text-align:center;padding:15px;font-weight:bold;color:#c08a00;">
+รอบ<br>1
+</div>
+
+<div style="background:#f5a800;color:white;flex:1;padding:15px;font-size:20px;font-weight:bold;">
+Portfolio<br>
+<span style="font-size:14px">ยืนยันสิทธิ์เรียบร้อยแล้ว</span>
+</div>
+
+</div>
+
+<h2 style="text-align:center;color:#2d5c8f;margin-top:25px;margin-bottom:5px;">
+ยืนยันสิทธิ์เรียบร้อยแล้ว
+</h2>
+
+<div id="time" class="time"></div>
+
+<div style="max-width:520px;margin:auto;background:white;border:3px solid #39b54a;border-radius:14px;padding:25px;position:relative;">
+
+<div style="position:absolute;top:0;left:0;width:0;height:0;border-top:60px solid #39b54a;border-right:60px solid transparent;"></div>
+
+<div style="position:absolute;top:6px;left:12px;color:white;font-size:22px;">✓</div>
+
+<!-- โลโก้จากไฟล์ในเครื่อง -->
+<img src="logo.png"
+style="width:80px;position:absolute;right:20px;top:20px;">
+
+<div style="line-height:1.45;font-size:18px;">
+
+<b>มหาวิทยาลัยเทพนคร</b><br>
+จังหวัดปทุมธานี<br>
+
+คณะ <span id="pfaculty"></span><br>
+สาขาวิชา <span id="pmajor"></span><br>
+
+หลักสูตรระดับปริญญาตรี<br>
+หลักสูตรปกติ (ภาษาไทย)<br>
+โครงการรับตรง
+
+</div>
+
+</div>
+
+<div onclick="toggleInfo()" style="text-align:center;margin-top:20px;font-size:18px;color:#666;cursor:pointer;">
+ข้อมูลเพิ่มเติม ▼
+</div>
+
+<div id="moreInfo" style="display:none;max-width:520px;margin:auto;margin-top:15px;font-size:18px;">
+
+ผู้สมัคร: <span id="pname"></span><br>
+โรงเรียน: <span id="pschool"></span>
+
+</div>
+
+</div>
+
+<script>
+
+let majors={
+
+engineer:["วิศวกรรมไฟฟ้า","วิศวกรรมโยธา"],
+
+comm:["ศิลปะการแสดง","การผลิตอีเว้นท์และการจัดนิทรรศการ"],
+
+business:["การออกแบบและการบริหารแฟชั่น","การวางแผนการเงินและการลงทุน"],
+
+film:["ภาพยนตร์"],
+
+psy:["จิตวิทยา"],
+
+med:["แพทยศาสตร์","สัตวแพทยศาสตร์"]
+
+}
+
+function changeMajor(){
+
+let faculty=document.getElementById("faculty").value
+let major=document.getElementById("major")
+
+major.innerHTML=""
+
+majors[faculty].forEach(m=>{
+let option=document.createElement("option")
+option.text=m
+major.add(option)
+})
+
+}
+
+let applicants=[]
+
+function apply(){
+
+let name=document.getElementById("name").value
+let school=document.getElementById("school").value
+let faculty=document.getElementById("faculty")
+let facultyName=faculty.options[faculty.selectedIndex].text
+let major=document.getElementById("major").value
+
+if(name==""||school==""){
+alert("กรอกข้อมูลให้ครบ")
+return
+}
+
+applicants.push({name,faculty:facultyName})
+
+showApplicants()
+
+document.getElementById("applyPage").style.display="none"
+document.getElementById("portfolioPage").style.display="block"
+
+document.getElementById("pname").innerText=name
+document.getElementById("pschool").innerText=school
+document.getElementById("pfaculty").innerText=facultyName
+document.getElementById("pmajor").innerText=major
+
+startTime()
+
+}
+
+function showApplicants(){
+
+let box=document.getElementById("applicants")
+box.innerHTML=""
+
+applicants.forEach(a=>{
+
+box.innerHTML+=`<p>${a.name} - ${a.faculty}</p>`
+
+})
+
+}
+
+function startTime(){
+
+setInterval(()=>{
+
+let now=new Date()
+
+let date=now.toLocaleDateString("th-TH",{
+day:"2-digit",
+month:"short",
+year:"2-digit"
+})
+
+let time=now.toLocaleTimeString("th-TH")
+
+document.getElementById("time").innerText=date+" "+time+" น."
+
+},1000)
+
+}
+
+function toggleInfo(){
+
+let box=document.getElementById("moreInfo")
+
+if(box.style.display==="none"){
+box.style.display="block"
+}else{
+box.style.display="none"
+}
+
+}
+
+</script>
+
+</body>
+  </html>
